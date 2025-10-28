@@ -21,8 +21,10 @@ console.log(result);
 console.log(typeof result); // Achtung: jetzt ein String!
 // JavaScript ist dynamisch typisiert: Der Typ wird erst zur Laufzeit bestimmt.
 
+// ? constVar = "Etwas Neues"; // würde Fehler werfen
+
 // ==========================================
-// # SCHLÜSSELWÖRTER (KEYWORDS)
+// ! SCHLÜSSELWÖRTER (KEYWORDS)
 // ==========================================
 //
 // Bestimmte Wörter sind in JavaScript reserviert und dürfen nicht als Variablennamen benutzt werden.
@@ -34,9 +36,7 @@ console.log(typeof result); // Achtung: jetzt ein String!
 // - for, while, do        → Schleifen
 // - break, continue       → Schleifenkontrolle
 
-// constVar = "Etwas Neues"; // würde Fehler werfen
-
-// # Konvention Veriablen-Namen: camelCase
+// ! Konvention Veriablen-Namen: camelCase
 let myVariable; // gut
 let MyVariable; // nicht empfohlen (PascalCase)
 let my_variable; // ebenfalls nicht empfohlen (snake_case)
