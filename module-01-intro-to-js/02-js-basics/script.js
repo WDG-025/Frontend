@@ -1,7 +1,7 @@
 console.log("Hallo aus der script.js");
 
 // Manipulation des DOM: Das <h1>-Element bekommt neuen Textinhalt
-document.querySelector("h1").textContent = "Manipuliert mit JavaScript!";
+// document.querySelector("h1").textContent = "Manipuliert mit JavaScript!";
 
 /* Mehrzeiliger Kommentar:
    So schreibt man längere Erklärungen oder Notizen im Code.
@@ -250,9 +250,9 @@ console.log(multNum); // 30
 // Wird verwendet, wenn du weißt, wie oft sie laufen soll.
 
 // Struktur einer for-Schleife (Demo-Syntax):
-for (initialization; condition; increment / decrement) {
+/* for (initialization; condition; increment / decrement) {
   // Code, der wiederholt ausgeführt wird
-}
+} */
 
 // Zähl-Schleife: läuft 5-mal (0–4)
 for (let i = 0; i < 5; i++) {
