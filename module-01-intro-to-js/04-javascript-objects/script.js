@@ -12,9 +12,10 @@ const person = {
 console.log(person.firstName);
 console.log(person.address.city);
 
-// * Klammer-Notation: dynamische Keys (z. B. aus Variablen) oder ungewöhnliche Namen ("user-id")
+// * Klammer-Notation: dynamische Keys (z. B. aus Variablen)
 const whatUserClickedOn = "age";
 console.log(person[whatUserClickedOn]);
+// * Ungewöhnliche Key Namen ("user-id")
 console.log(person["user-id"]);
 
 // # Kapitel 2 – Objekte sind veränderbar (mutierbar)
