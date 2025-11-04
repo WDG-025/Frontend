@@ -57,9 +57,9 @@ if (Number.isNaN(num1) || Number.isNaN(num2)) {
   process.exit(2);
 }
 
-// # isNaN vs. Number.isNaN – feiner Unterschied:
-// Number.isNaN() prüft, ob der Wert wirklich NaN ist.
-// Ideal, wenn die Werte vorher bereits mit Number() konvertiert wurden
+// # isNaN vs. Number.isNaN:
+// Number.isNaN() prüft, ob der Wert NaN ist. NaN = true, ansonsten = false.
+// Ideal, wenn die Werte vorher bereits mit Number() konvertiert wurden und number oder NaN sind.
 //       Number.isNaN("hello") → false
 //       Number.isNaN(5)       → false
 //       Number.isNaN(NaN)     → true
