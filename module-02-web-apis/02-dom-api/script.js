@@ -83,10 +83,6 @@ const htmlExample2 = document.createElement("div");
 htmlExample2.innerHTML = "<strong>Hello</strong> world (innerHTML)";
 paraContainer.appendChild(htmlExample2);
 
-// # Beobachte den Unterschied:
-// * textContent zeigt <strong> als Text an
-// * innerHTML rendert <strong> fett formatiert
-
 // # Kapitel 4: Events & Interaktion
 // * Handler klar benennen → besser lesbar/testbar
 const handleClick = () => {
