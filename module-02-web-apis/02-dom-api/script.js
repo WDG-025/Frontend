@@ -35,6 +35,7 @@ subHeading.style.color = "red"; // * Inline-Style (für schnelle Demos ok)
 // * Klassen-API (vorzuziehen gegenüber direkten Style-Änderungen)
 subHeading.classList.add("m-2", "bg-red-500");
 subHeading.classList.remove("bg-red-500");
+// subHeading.classList.toggle()
 
 // * Iteration über HTMLCollection (paras)
 for (let i = 0; i < paras.length; i++) {
@@ -66,22 +67,22 @@ const createPara = (text) => {
   paraContainer.appendChild(newPara);
 };
 
-createPara("JS created this paragraph");
-createPara("JS created this paragraph again");
+// createPara("JS created this paragraph");
+// createPara("JS created this paragraph again");
 
-// # Kapitel 3b: Unterschied zwischen textContent und innerHTML
+// // # Kapitel 3b: Unterschied zwischen textContent und innerHTML
 
-// * Beispiel: neues Element mit HTML-Struktur erzeugen
-const htmlExample = document.createElement("div");
+// // * Beispiel: neues Element mit HTML-Struktur erzeugen
+// const htmlExample = document.createElement("div");
 
-// * Variante A: Nur Text (Tags werden als Text angezeigt)
-htmlExample.textContent = "<strong>Hello</strong> world (textContent)";
-paraContainer.appendChild(htmlExample);
+// // * Variante A: Nur Text (Tags werden als Text angezeigt)
+// htmlExample.textContent = "<strong>Hello</strong> world (textContent)";
+// paraContainer.appendChild(htmlExample);
 
-// * Variante B: Echte HTML-Struktur (Tags werden interpretiert)
-const htmlExample2 = document.createElement("div");
-htmlExample2.innerHTML = "<strong>Hello</strong> world (innerHTML)";
-paraContainer.appendChild(htmlExample2);
+// // * Variante B: Echte HTML-Struktur (Tags werden interpretiert)
+// const htmlExample2 = document.createElement("div");
+// htmlExample2.innerHTML = "<strong>Hello</strong> world (innerHTML)";
+// paraContainer.appendChild(htmlExample2);
 
 // # Kapitel 4: Events & Interaktion
 // * Handler klar benennen → besser lesbar/testbar
@@ -93,3 +94,39 @@ const handleClick = () => {
 
 // * Event-Listener registrieren (Preferred gegenüber onClick-Attributen)
 changeColorBtn.addEventListener("click", handleClick);
+
+window.addEventListener("load", () => {
+  console.log("Page has been loaded");
+});
+
+// # Forms
+const form = document.querySelector("form");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const newParagraph = event.target["new-paragraph"].value;
+  //   console.log(typeof newParagraph);
+
+  //   if (newParagraph === "") {
+  if (!newParagraph) {
+    alert("Please enter a text");
+    return;
+  }
+
+  if (newParagraph.length < 3) {
+    return;
+  }
+
+  if (newParagraph.length > 100) {
+    return;
+  }
+
+  if (newParagraph.includes("<script>")) {
+    return;
+  }
+
+  createPara(newParagraph);
+
+  event.target["new-paragraph"].value = "";
+  //   event.target.reset();
+});
