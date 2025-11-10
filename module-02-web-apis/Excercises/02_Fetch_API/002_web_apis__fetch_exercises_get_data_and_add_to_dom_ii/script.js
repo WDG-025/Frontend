@@ -12,8 +12,10 @@
 
 // **Pokémon API:** A free API that provides information about Pokémon.
 
+// Container-Element aus dem DOM holen
 const pokeContainer = document.querySelector('#pokemon-container');
 
+// Funktion zum Rendern einer Pokemon-Karte
 function renderPokeCard(data) {
   console.log(data);
   const html = `
@@ -35,39 +37,46 @@ function renderPokeCard(data) {
           </div>
         </article>`;
 
-  // pokeContainer.innerHTML = html;
+  // Einfachste Möglichkeit, HTML dem DOM hinzuzufügen
+  // pokeContainer.innerHTML += html;
+
+  // Etwas mehr Kontrolle
   pokeContainer.insertAdjacentHTML('beforeend', html);
 }
 
-// renderPokeCard();
-
-// fetch('https://pokeapi.co/api/v2/pokemon/ditto');
-
 // const pokeId = Math.floor(Math.random() * 150);
 
+// Fetch mit .then()-Method Chaining
 // fetch(`https://pokeapi.co/api/v2/pokemon/${pokeId}`)
-//   .then((res) => res.json())
-//   .then((data) => renderPokeCard(data));
+//   .then((res) => res.json())  // Response in JSON umwandeln
+//   .then((data) => renderPokeCard(data));  // Daten verarbeiten
 
+// Mehrere Fetches mit .then() in einer Schleife
 // for (let i = 1; i < 10; i++) {
 //   fetch(`https://pokeapi.co/api/v2/pokemon/${i}`)
-//     .then((res) => res.json())
-//     .then((data) => renderPokeCard(data))
-//     .catch((err) => console.log(err))
-//     .finally(() => console.log('Läuft immer, ob Fehler oder nicht'));
+//     .then((res) => res.json())  // Response zu JSON konvertieren
+//     .then((data) => renderPokeCard(data))  // Erfolgsfall
+//     .catch((err) => console.log(err))  // Fehlerbehandlung
+//     .finally(() => console.log('Läuft immer, ob Fehler oder nicht'));  // Wird immer ausgeführt
 // }
 
+// Async/Await-Variante - modernerer Ansatz für Fetch
 async function fetchPokeData(pokeId) {
   try {
+    // Fetch-Aufruf mit await - wartet auf die Response
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeId}`);
+    // Prüfen, ob die Response erfolgreich war (Status 200-299)
     if (!res.ok) throw new Error('Fetch failed');
+    // Response in JSON umwandeln (auch asynchron)
     const data = await res.json();
     renderPokeCard(data);
   } catch (error) {
+    // Fehlerbehandlung für Fetch-Fehler oder nicht-erfolgreiche Responses
     console.log('Da lief etwas schief');
   }
 }
 
+// Mehrere Pokemon gleichzeitig fetchen (parallel)
 for (let i = 1; i < 10; i++) {
   fetchPokeData(i);
 }
