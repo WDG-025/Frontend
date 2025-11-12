@@ -1,13 +1,38 @@
 let users = [];
 const containerEl = document.getElementById('card-container');
 
+// THEMA Web Storage
+
+// Schritt 1: Daten im localStorage speichern
+const saveUser = (userId) => {
+  const user = users.find((user) => user.id === userId);
+  // Lädt gespeicherte Bookmarks aus localStorage
+  // Wenn keine bookmark vorhanden ist (erstes Laden) wird ein leeres Array erstellt
+  //  ?? -> Nullish Coalescing Operator: gibt den rechten Ausdruck zurück, wenn der linke null oder undefined ist
+  const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) ?? [];
+  bookmarks.push(user);
+
+  // Speichert erweiterte Bookmark-Liste in localStorage
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+};
+
+// Schritt 2: Daten aus dem localStorage entfernen
+const removeUser = (userId) => {
+  // Lädt bestehende Bookmarks aus localStorage
+  const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) ?? [];
+  const updatedBookmarks = bookmarks.filter((user) => user.id !== userId);
+  // Aktualisiert localStorage mit gefilterter Liste
+  localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks));
+};
+
+// Schritt 3: Beim Laden der Webseite UI mit gespeicherten Daten abgleichen
 const renderUserCards = (data) => {
-  //  TODO: Lade aus localStorage
-  const bookmarks = [];
+  // Lädt bestehende Bookmarks aus localStorage
+  const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) ?? [];
 
   for (const user of data) {
-    // TODO: Prüft, ob User bereits als Bookmark gespeichert ist
-    const exists = false;
+    //  Prüft, ob User bereits als Bookmark gespeichert ist
+    const exists = bookmarks.find((u) => u.id === user.id);
 
     const html = `
      <article class="boder rounded-xl shadow-indigo-950 shadow-2xl bg-indigo-900 py-5 px-8 space-y-2"
@@ -43,6 +68,8 @@ const renderUserCards = (data) => {
   }
 };
 
+// Ende Thema Web Storage
+
 const fetchPlaceholders = async () => {
   try {
     const response = await fetch('https://jsonplaceholder.typicode.com/users');
@@ -53,14 +80,6 @@ const fetchPlaceholders = async () => {
   } catch (error) {
     console.log(error);
   }
-};
-
-const saveUser = (userId) => {
-  console.log('Speichere im localStorage');
-};
-
-const removeUser = (userId) => {
-  console.log('Lösche aus localStorage');
 };
 
 const handleContainerClick = (e) => {
@@ -77,5 +96,4 @@ const handleContainerClick = (e) => {
 
 fetchPlaceholders();
 
-// document.addEventListener('DOMContentLoaded', fetchPlaceholders);
 containerEl.addEventListener('click', handleContainerClick);
