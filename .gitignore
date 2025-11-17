@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# usually do not add these. They are needed:
+# usually do not add these. They are needed, but because I switch between npm / pnpm all the time, Iäll add these here anyway:
 pnpm-lock.yaml
 package-lock.json
