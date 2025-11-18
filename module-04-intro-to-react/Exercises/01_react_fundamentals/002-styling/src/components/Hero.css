@@ -1,0 +1,13 @@
+.hero__heading {
+	width: 10rem;
+	background-color: rebeccapurple;
+	font-size: 3rem;
+
+	animation: pulse 2000ms infinite linear;
+}
+
+@keyframes pulse {
+	50% {
+		opacity: 0.5;
+	}
+}
