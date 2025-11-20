@@ -1,9 +1,11 @@
+import Grade from "./Grade";
+
 const Student = ({ person }) => {
-  const { firstName, age, course, city, lastName, picture, grade } = person;
+  const { firstName, age, course, city, lastName, picture, gpa, graduate } = person;
 
   // console.log(props);
   return (
-    <article className="card">
+    <article className={`card ${graduate ? "card-graduate" : ""}`}>
       <img className="card-image" src={picture} alt="" />
       <div className="card-body">
         <h2>
@@ -12,10 +14,13 @@ const Student = ({ person }) => {
         <p>Age: {age}</p>
         <p>City: {city}</p>
         <p>Course: {course}</p>
+        <Grade gpa={gpa} />
+        <p>Status: {graduate ? "Alumnus" : "Student"}</p>
       </div>
-
-      {/* <Klausuren bestanden={grade} /> */}
     </article>
   );
 };
 export default Student;
+
+// JSX: pseudo-HTML     {} in JS
+// `Text und so ... ${hier ist JS}`
