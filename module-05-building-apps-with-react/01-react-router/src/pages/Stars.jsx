@@ -2,8 +2,8 @@ import { useOutletContext } from "react-router";
 import Card from "../components/Card.jsx";
 
 const Stars = () => {
+  // useOutletContext holt sich Daten vom Parent-Layout (MainLayout) aus dem 'context'-Prop
   const stars = useOutletContext();
-
   if (!stars) return <p className="message--loading">Loading...</p>;
 
   return (

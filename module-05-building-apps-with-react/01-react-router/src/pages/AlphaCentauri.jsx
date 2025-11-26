@@ -1,10 +1,14 @@
+// import { useEffect } from 'react';
+
 const AlphaCentauri = () => {
   // useEffect(() => {
-  //   document.title = "Alpha Centauri | Stars Gallery";
+  //   document.title = 'Alpha Centauri | Stars Gallery';
   // }, []);
 
   return (
     <div className="star">
+      {/* title und andere Tags, die in den <head> gehören, können seit React19 */}
+      {/* in eine Komponente geschireben werden. Der obige useEffect ist nicht mehr nötig */}
       <title>Alpha Centauri | Stars Gallery</title>
       <div>
         <img src="/alpha-centauri.jpeg" alt="Alpha Centauri, the closest Star System to us." />
