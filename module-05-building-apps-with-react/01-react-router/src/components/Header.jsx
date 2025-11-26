@@ -1,3 +1,5 @@
+import { Link, NavLink } from "react-router";
+
 export default function Header() {
   return (
     <header className="header">
@@ -13,14 +15,14 @@ export default function Header() {
       <nav>
         <ul>
           <li>
-            <a className="navlink" href="#">
+            <NavLink className="navlink" to="/">
               Home
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a className="navlink" href="#">
+            <NavLink className="navlink" to="/alpha-centauri">
               Alpha Centauri
-            </a>
+            </NavLink>
           </li>
         </ul>
       </nav>

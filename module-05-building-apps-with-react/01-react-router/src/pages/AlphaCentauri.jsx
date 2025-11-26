@@ -1,6 +1,11 @@
 const AlphaCentauri = () => {
+  // useEffect(() => {
+  //   document.title = "Alpha Centauri | Stars Gallery";
+  // }, []);
+
   return (
     <div className="star">
+      <title>Alpha Centauri | Stars Gallery</title>
       <div>
         <img src="/alpha-centauri.jpeg" alt="Alpha Centauri, the closest Star System to us." />
       </div>
