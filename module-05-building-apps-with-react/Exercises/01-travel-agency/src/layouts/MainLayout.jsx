@@ -7,7 +7,7 @@ const MainLayout = () => {
   const [destinations, setDestinations] = useState(null);
 
   useEffect(() => {
-    fetch('./travel.json')
+    fetch('/travel.json')
       .then((res) => res.json())
       .then((data) => setDestinations(data));
   }, []);
