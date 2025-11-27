@@ -4,7 +4,6 @@
 
 ![image](https://github.com/user-attachments/assets/e364c75d-d6b2-4cbd-aa7a-870f7674e528)
 
-
 This is a template with **React 19**, **TailwindCSS 4**, and **DaisyUI 5**, provided by **[WBS CODING SCHOOL](https://www.wbscodingschool.com/)**.
 
 ## Clone into directory
