@@ -21,6 +21,10 @@ export default function SingleStar() {
   const { slug } = useParams();
   // useOutletContext holt Daten vom Parent-Layout
   const stars = useOutletContext();
+
+  // Early return wenn Daten noch laden
+  if (!stars) return <p>Loading...</p>;
+
   const star = stars.find((s) => s.slug === slug);
 
   return (
