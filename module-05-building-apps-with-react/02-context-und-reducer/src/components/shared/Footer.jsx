@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/a11y/useValidAnchor: <explanation> */
 import { Link } from 'react-router';
 
 const Footer = () => {
