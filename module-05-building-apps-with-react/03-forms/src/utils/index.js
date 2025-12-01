@@ -9,5 +9,4 @@ export const validate = ({ name, email, message }) => {
   if (!message.trim()) newErrors.message = "Message is required.";
   return newErrors;
 };
-
 export const sleep = (ms) => new Promise((res) => setTimeout(res, ms));

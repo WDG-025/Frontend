@@ -1,41 +1,40 @@
-// Code from <https://learn.wbscodingschool.com/courses/full-stack-web-app/lessons/data-mutations/topic/%f0%9f%93%9a-onsubmit-event/>
-import { useState } from "react";
-import { validate, sleep } from "./utils/index.js";
+/** biome-ignore-all lint/correctness/useUniqueElementIds: <not now> */
+import { useActionState } from "react";
+// import { ErrorBoundary } from 'react-error-boundary';
+// import ErrorFallback from './components/ErrorFallback.jsx';
+import SubmitBtn from "./components/SubmitBtn.jsx";
+import { sleep, validate } from "./utils/index.js";
 
-const App = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+// action Funktion anstelle des Submit Handlers
+// Hat in Verbindung mit useActionState-Hook Zugriff auf
+// vorherigen State und die Formulardaten
+async function action(_prevState, formData) {
+  console.log(_prevState);
+  const data = Object.fromEntries(formData); // FormData in Objekt einlesen
+  const validationErrors = validate(data);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  if (Object.keys(validationErrors).length === 0) {
+    // hier würde Netzwerkrequest stattfinden
+    await sleep(2000); // Simulate network delay
+    console.log("Submitted:", data);
+    alert("Form submitted successfully!");
+
+    // Rückgabe kommt in state
+    return {};
+  }
+  // throw new Error('Invalid Form');
+  // Bei Fehlern können wir den state nutzen, um
+  // die ursprüngliche Nutzereingabe zu erhalten
+  // und Fehlermeldungen anzuzeigen.
+  return {
+    errors: validationErrors,
+    input: data,
   };
+}
 
-  const handleSubmit = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    const validationErrors = validate(formData);
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length === 0) {
-      await sleep(2000); // Simulate network delay
-      console.log("Submitted:", formData);
-      alert("Form submitted successfully!");
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
-    }
-    setLoading(false);
-  };
+export default function App() {
+  // Hook verbinded Action-Funktion und Komponenten-State
+  const [state, formAction, isPending] = useActionState(action, {});
 
   return (
     <main className="min-h-screen bg-gray-900 p-8 font-sans">
@@ -43,7 +42,9 @@ const App = () => {
         <h2 className="text-2xl font-bold text-center text-gray-200">
           Contact Us
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {/* <ErrorBoundary FallbackComponent={ErrorFallback}> */}
+        {/* Vom Hook vermittelte formAction */}
+        <form action={formAction} className="space-y-4">
           <div>
             <label
               className="block text-sm font-medium text-gray-200"
@@ -52,74 +53,65 @@ const App = () => {
               Name
             </label>
             <input
+              // evt. State-Daten als überschreibarer defaultValue
+              defaultValue={state.input?.name}
               name="name"
               id="name"
-              value={formData.name}
-              onChange={handleChange}
-              disabled={loading}
+              // Input kann über isPending abgeschaltet werden
+              disabled={isPending}
               className="w-full mt-1 border border-gray-300 rounded px-3 py-2"
               placeholder="Leia Organa"
             />
-            {errors.name && (
-              <p className="text-sm text-red-600 mt-1">{errors.name}</p>
+            {/* Anzeige etwaiger Fehlermeldungen aus State */}
+            {state.errors?.name && (
+              <p className="text-sm text-red-600 mt-1">{state.errors.name}</p>
             )}
           </div>
           <div>
             <label
-              className="block text-sm font-medium text-gray-200"
+              className="block text-sm font-medium text-gray-700"
               htmlFor="email"
             >
               Email
             </label>
             <input
+              defaultValue={state.input?.email}
               name="email"
               id="email"
-              value={formData.email}
-              onChange={handleChange}
-              disabled={loading}
+              disabled={isPending}
               className="w-full mt-1 border border-gray-300 rounded px-3 py-2"
               placeholder="leia@rebellion.org"
             />
-            {errors.email && (
-              <p className="text-sm text-red-600 mt-1">{errors.email}</p>
+            {state.errors?.email && (
+              <p className="text-sm text-red-600 mt-1">{state.errors.email}</p>
             )}
           </div>
           <div>
             <label
-              className="block text-sm font-medium text-gray-200"
+              className="block text-sm font-medium text-gray-700"
               htmlFor="message"
             >
               Message
             </label>
             <textarea
+              defaultValue={state.input?.message}
               name="message"
               id="message"
               rows={4}
-              value={formData.message}
-              onChange={handleChange}
-              disabled={loading}
+              disabled={isPending}
               className="w-full mt-1 border border-gray-300 rounded px-3 py-2"
               placeholder="Tell us how we can help..."
             />
-            {errors.message && (
-              <p className="text-sm text-red-600 mt-1">{errors.message}</p>
+            {state.errors?.message && (
+              <p className="text-sm text-red-600 mt-1">
+                {state.errors.message}
+              </p>
             )}
           </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full py-2 rounded text-white ${
-              loading
-                ? "bg-blue-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
-            }`}
-          >
-            {loading ? "Sending message..." : "Send Message"}
-          </button>
+          <SubmitBtn />
         </form>
+        {/* </ErrorBoundary> */}
       </div>
     </main>
   );
-};
-
-export default App;
+}
