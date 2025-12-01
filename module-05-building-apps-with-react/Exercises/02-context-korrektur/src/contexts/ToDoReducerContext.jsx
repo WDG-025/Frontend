@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 export const TodoReducerContext = createContext();
 
@@ -33,10 +33,12 @@ function reduce(state, action) {
           ? { ...todo, completed: !todo.completed }
           : todo
       );
+      localStorage.setItem("todos", JSON.stringify(todos));
       return { ...state, todos };
     }
     case "DELETE_TODO": {
       const todos = state.todos.filter((todo) => todo.id !== action.payload);
+      localStorage.setItem("todos", JSON.stringify(todos));
       return { ...state, todos };
     }
     default:
@@ -47,10 +49,10 @@ function reduce(state, action) {
 export default function TodoReducerProvider({ children }) {
   const [state, dispatch] = useReducer(reduce, initialState);
 
-  // Speichere Todos im LocalStorage, wenn sie sich ändern
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(state.todos));
-  }, [state.todos]);
+  // // Speichere Todos im LocalStorage, wenn sie sich ändern
+  // useEffect(() => {
+  //   localStorage.setItem("todos", JSON.stringify(state.todos));
+  // }, [state.todos]);
 
   // Action Creator Funktionen - kapseln dispatch-Aufrufe
   function addTodo(text) {
