@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
+import { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const Instructions = ({ path }) => {
   const [loading, setLoading] = useState(true);
@@ -13,13 +13,13 @@ const Instructions = ({ path }) => {
       setError(null);
       try {
         const res = await fetch(path, {
-          signal: abortController.signal,
+          signal: abortController.signal
         });
-        if (!res.ok) throw new Error("Something went wrong. Contact your instructor");
+        if (!res.ok) throw new Error('Something went wrong. Contact your instructor');
         setMarkdownText(await res.text());
       } catch (e) {
-        if (e.name === "AbortError") return;
-        setError("Failed to get instructions. Contact your instructor");
+        if (e.name === 'AbortError') return;
+        setError('Failed to get instructions. Contact your instructor');
         console.error(e);
       } finally {
         setLoading(false);
@@ -32,21 +32,21 @@ const Instructions = ({ path }) => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center gap-2 py-10">
-        <span className="loading loading-spinner loading-lg"></span>
+      <div className='flex justify-center items-center gap-2 py-10'>
+        <span className='loading loading-spinner loading-lg'></span>
         <span>Loading Instructions...</span>
       </div>
     );
 
   if (error)
     return (
-      <div className="alert alert-error shadow-lg">
+      <div className='alert alert-error shadow-lg'>
         <span>{error}</span>
       </div>
     );
 
   return (
-    <div className="instructions-container">
+    <div className='instructions-container'>
       <ReactMarkdown>{markdownText}</ReactMarkdown>
     </div>
   );

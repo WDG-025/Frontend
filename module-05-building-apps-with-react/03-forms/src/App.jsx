@@ -39,17 +39,12 @@ export default function App() {
   return (
     <main className="min-h-screen bg-gray-900 p-8 font-sans">
       <div className="max-w-xl mx-auto bg-gray-950 p-6 rounded-lg shadow space-y-6">
-        <h2 className="text-2xl font-bold text-center text-gray-200">
-          Contact Us
-        </h2>
+        <h2 className="text-2xl font-bold text-center text-gray-200">Contact Us</h2>
         {/* <ErrorBoundary FallbackComponent={ErrorFallback}> */}
         {/* Vom Hook vermittelte formAction */}
         <form action={formAction} className="space-y-4">
           <div>
-            <label
-              className="block text-sm font-medium text-gray-200"
-              htmlFor="name"
-            >
+            <label className="block text-sm font-medium text-gray-200" htmlFor="name">
               Name
             </label>
             <input
@@ -63,15 +58,10 @@ export default function App() {
               placeholder="Leia Organa"
             />
             {/* Anzeige etwaiger Fehlermeldungen aus State */}
-            {state.errors?.name && (
-              <p className="text-sm text-red-600 mt-1">{state.errors.name}</p>
-            )}
+            {state.errors?.name && <p className="text-sm text-red-600 mt-1">{state.errors.name}</p>}
           </div>
           <div>
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="email"
-            >
+            <label className="block text-sm font-medium text-gray-700" htmlFor="email">
               Email
             </label>
             <input
@@ -87,10 +77,7 @@ export default function App() {
             )}
           </div>
           <div>
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="message"
-            >
+            <label className="block text-sm font-medium text-gray-700" htmlFor="message">
               Message
             </label>
             <textarea
@@ -103,9 +90,7 @@ export default function App() {
               placeholder="Tell us how we can help..."
             />
             {state.errors?.message && (
-              <p className="text-sm text-red-600 mt-1">
-                {state.errors.message}
-              </p>
+              <p className="text-sm text-red-600 mt-1">{state.errors.message}</p>
             )}
           </div>
           <SubmitBtn />
