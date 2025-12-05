@@ -20,7 +20,12 @@ const graphCoordinates: [number, number, number?] = [23, -3];
 // # Type-Aliases
 
 type StringOrNumber = string | number;
-type Person = { id: StringOrNumber; readonly name: string; age: number; city?: string };
+type Person = {
+  id: StringOrNumber;
+  readonly name: string;
+  age: number;
+  city?: string;
+};
 
 const person: Person = {
   id: "34543sdf-5234",
@@ -69,11 +74,50 @@ console.log(users);
 
 users.forEach((user) => console.log(`${user.name} ist ${user.age} Jahre alt`));
 
-// const test: readonly [{}, {}] = [{}, {}];
-// const name = "Sarah";
+// # Array Mutierbarkeit - Das "Problem" und Lösungen
 
-// test.push({ name: "test" });
-// test.push("Test");
+// PROBLEM: TypeScript Arrays sind standardmäßig MUTABLE
+// Du kannst pushen, was immer der Array-Typ erlaubt
+const numbers: number[] = [1, 2, 3];
+numbers.push(4); // ✅ OK
+numbers.push(5); // ✅ OK
+// numbers.push("6"); // ❌ TypeScript verhindert das (gut!)
+
+// Aber: Auch bei Tuples kann man pushen (wenn kein readonly)
+const tuple: [string, number] = ["hello", 42];
+tuple.push("world"); // ⚠️ Funktioniert! Aber bricht die Tuple-Struktur
+// tuple ist jetzt ["hello", 42, "world"] - kein Tuple mehr!
+
+// LÖSUNGEN:
+
+// 1. readonly für Arrays
+const readonlyNumbers: readonly number[] = [1, 2, 3];
+// readonlyNumbers.push(4); // ❌ Fehler: Cannot assign to 'push' because it is a read-only property
+
+// 2. readonly für Tuples (verhindert push komplett)
+const readonlyTuple: readonly [string, number] = ["hello", 42];
+// readonlyTuple.push("world"); // ❌ Fehler: Property 'push' does not exist
+
+// 3. const assertion (macht Array readonly und verengt Typen)
+const constArray = [1, 2, 3] as const;
+// constArray.push(4); // ❌ Fehler: Cannot assign to 'push' because it is a read-only property
+// constArray[0] = 10; // ❌ Fehler: Cannot assign because it is a read-only property
+
+// 4. ReadonlyArray<T> Type (Alternative zu readonly T[])
+const readonlyArray: ReadonlyArray<number> = [1, 2, 3];
+// readonlyArray.push(4); // ❌ Fehler
+
+// Beispiel 1: Mutable Tuple (ohne readonly)
+// TypeScript erlaubt push(), weil Tuples zur Laufzeit Arrays sind
+const testMutable: [{}, {}] = [{}, {}];
+// testMutable.push({ name: "test" }); // ✅ Funktioniert! (aber nicht typ-sicher)
+
+// Beispiel 2: Readonly Tuple
+// Mit readonly werden Mutation-Methoden entfernt
+const testReadonly: readonly [{}, {}] = [{}, {}];
+// testReadonly.push({ name: "test" }); // ❌ Fehler: Property 'push' does not exist
+
+// const name = "Sarah";
 // console.log(test);
 
 // # Type Intersections
@@ -116,7 +160,7 @@ function movePlayer(direction: Direction) {
 
 movePlayer("left"); //
 movePlayer("left"); //
-movePlayer("forward"); //  Error: Argument of type '"forward"' is not assignable to type 'Direction'
+// movePlayer("forward"); //  Error: Argument of type '"forward"' is not assignable to type 'Direction'
 
 // Example 3: Switch statement with exhaustive checking
 function handleDirection(dir: Direction) {
@@ -141,7 +185,7 @@ function handleDirection(dir: Direction) {
 }
 
 handleDirection("left");
-handleDirection("forward"); //  Error: Argument of type '"forward"' is not assignable to type 'Direction'
+// handleDirection("forward"); //  Error: Argument of type '"forward"' is not assignable to type 'Direction'
 
 // # Function Types
 
