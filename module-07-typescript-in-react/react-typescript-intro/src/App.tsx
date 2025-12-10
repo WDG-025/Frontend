@@ -28,7 +28,7 @@ type GreetingProps = {
 	name: string;
 };
 
-function Greeting({ name }: GreetingProps) {
+function Greeting({ name }: {name: string}) {
 	return <h1>Hello, {name.toUpperCase()}</h1>;
 }
 
@@ -121,49 +121,4 @@ function UserInfo() {
 	const [user, setUser] = useState<UserType | null>(null);
 
 	return <p>{user ? `Welcome ${user.name}` : 'Loading...'}</p>;
-}
-
-type Post = {
-	id: number;
-	title: string;
-	body: string;
-};
-
-function Post() {
-	const [posts, setPosts] = useState<Post[]>([]);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<string | null>();
-
-	useEffect(() => {
-		async function getPosts() {
-			try {
-				setLoading(true);
-				const res = await fetch(
-					'https://jsonplaceholder.typicode.com/pots'
-				);
-				if (!res.ok) throw new Error('Failed to fetch posts');
-				const data = (await res.json()) as Post[];
-				setPosts(data);
-				setLoading(false);
-			} catch (error: unknown) {
-				if (error instanceof Error) {
-					setError(error.message);
-					setLoading(false);
-				}
-			}
-		}
-		getPosts();
-	}, []);
-
-	if (loading) return <p>Loading....</p>;
-	if (error) return <p>Error: {error}</p>;
-	if (!posts) return <p>No posts found</p>;
-
-	return (
-		<ul>
-			{posts.map((p) => (
-				<li key={p.id}>{p.title}</li>
-			))}
-		</ul>
-	);
 }
